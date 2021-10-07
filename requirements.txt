@@ -1,0 +1,6 @@
+pip~=20.2.3
+flask
+Jinja2
+flask-wtf
+requests
+Flask-SQLAlchemy
