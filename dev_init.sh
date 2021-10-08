@@ -23,4 +23,4 @@ echo Dependenceis installed!
 # flask init-db
 
 # launch app using gunicorn
-flask run
+flask run -h localhost -p 5000

@@ -4,3 +4,4 @@ Jinja2
 flask-wtf
 requests
 Flask-SQLAlchemy
+gunicorn

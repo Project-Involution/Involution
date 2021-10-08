@@ -23,4 +23,4 @@ echo Dependenceis installed!
 # flask init-db
 
 # launch app using gunicorn
-python3 -m gunicorn "app:create_app()"
+python3 -m gunicorn -b 0.0.0.0:8000 "app:create_app()"
