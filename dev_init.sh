@@ -16,11 +16,8 @@ source ./venv/bin/activate
 
 # dependencies
 pip install -r requirements.txt
-echo Dependenceis installed!
+echo Dependencies installed!
 
-# init database and run
-# echo Trying to init database...
-# flask init-db
 
-# launch app using gunicorn
+# launch app using flask run
 flask run -h localhost -p 5000
