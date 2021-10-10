@@ -1,7 +1,13 @@
 pip~=20.2.3
-flask
+flask~=2.0.2
 Jinja2
 flask-wtf
 requests
 Flask-SQLAlchemy
 gunicorn
+flask-login
+wtforms[email]~=2.3.3
+
+Werkzeug~=2.0.2
+click~=8.0.3
+SQLAlchemy~=1.4.25

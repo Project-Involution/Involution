@@ -18,6 +18,8 @@ source ./venv/bin/activate
 pip install -r requirements.txt
 echo Dependencies installed!
 
+# database init
+flask init-db
 
 # launch app using flask run
 flask run -h localhost -p 5000

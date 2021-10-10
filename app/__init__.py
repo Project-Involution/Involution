@@ -1,29 +1,30 @@
 import os
 from flask import Flask
 
-try:
-    from db import get_db
-except ImportError:
-    from .db import get_db
-
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
 
-    from app import db
-
-    db.init_app(app)
-
     app.config.from_mapping(
         SECRET_KEY="dev",
-        SQLALCHEMY_DATABASE_URI=f'sqlite://{os.path.join(app.instance_path, "app.db")}',
+        SQLALCHEMY_DATABASE_URI=f'sqlite:///{os.path.join(app.instance_path, "app.db")}',
+        SQLALCHEMY_TRACK_MODIFICATIONS=False,
     )
 
-    # apps start here
+    # push the app context
+    with app.app_context():
 
-    from app import index
+        # IMPORTANT :import different models before the db.init_app (so all models are visible to db)
+        from .models import user
+        from .controllers import db
 
-    app.register_blueprint(index.bp)
+        db.init_app(app)
+
+        # blueprints start here
+        from .controllers import index, login
+
+        app.register_blueprint(index.bp)
+        app.register_blueprint(login.bp)
 
     return app
 
