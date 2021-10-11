@@ -21,5 +21,11 @@ echo Dependencies installed!
 # database init
 flask init-db
 
+# clear port
+killport() { 
+  sudo lsof -i tcp:$1 | awk 'NR!=1 {print $2}' | xargs sudo kill -9 
+}
+killport 80
+
 # launch app using gunicorn
 sudo ./venv/bin/python -m gunicorn -w 4 -b 0.0.0.0:80 "app:create_app()"
