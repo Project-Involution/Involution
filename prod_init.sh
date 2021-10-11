@@ -18,5 +18,8 @@ source ./venv/bin/activate
 pip install -r requirements.txt
 echo Dependencies installed!
 
+# database init
+flask init-db
+
 # launch app using gunicorn
 sudo ./venv/bin/python -m gunicorn -w 4 -b 0.0.0.0:80 "app:create_app()"

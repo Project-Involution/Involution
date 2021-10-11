@@ -35,10 +35,6 @@ def close_db():
 
 
 def init_db():
-    try:
-        os.makedirs(current_app.instance_path)
-    except OSError:
-        pass
 
     db_location = os.path.join(current_app.instance_path, "app.db")
     db = Path(db_location)

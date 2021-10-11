@@ -11,6 +11,12 @@ def create_app():
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
     )
 
+    try:
+        os.makedirs(app.instance_path)
+        
+    except OSError:
+        pass
+
     # push the app context
     with app.app_context():
 
