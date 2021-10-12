@@ -1,15 +1,24 @@
 import os
+
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from app.controllers.db import init_app
+
+db = SQLAlchemy()
+migrate = Migrate()
 
 
 def create_app():
-    app = Flask(__name__, instance_relative_config=True)
+    app = Flask(__name__)
 
     app.config.from_mapping(
         SECRET_KEY="dev",
         SQLALCHEMY_DATABASE_URI=f'sqlite:///{os.path.join(app.instance_path, "app.db")}',
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
     )
+
+    init_app(app)
 
     try:
         os.makedirs(app.instance_path)
@@ -20,11 +29,8 @@ def create_app():
     # push the app context
     with app.app_context():
 
-        # IMPORTANT :import different models before the db.init_app (so all models are visible to db)
-        from .models import user
-        from .controllers import db
-
         db.init_app(app)
+        migrate.init_app(app, db)
 
         # blueprints start here
         from .controllers import index, login

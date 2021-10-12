@@ -18,8 +18,12 @@ source ./venv/bin/activate
 pip install -r requirements.txt
 echo Dependencies installed!
 
-# database init
+# initialize the db
+echo Do you want to initialize the database?
 flask init-db
+
+# upgrade to latest db version
+flask db upgrade head
 
 # clear port
 killport() { 

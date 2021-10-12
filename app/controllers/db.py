@@ -1,37 +1,8 @@
 import click
 import os
-import sqlite3
-from flask import current_app, g
+from flask import current_app
 from flask.cli import with_appcontext
-from flask_sqlalchemy import SQLAlchemy
 from pathlib import Path
-
-
-def create_connection(db_file):
-    """ create a database connection to a SQLite database """
-    conn = None
-    try:
-        conn = sqlite3.connect(db_file)
-        print(sqlite3.version)
-    except sqlite3.Error as e:
-        print(e)
-    finally:
-        if conn:
-            conn.close()
-
-
-def get_db():
-
-    if "db" not in g:
-        g.db = SQLAlchemy(current_app)
-    return g.db
-
-
-def close_db():
-    db = g.pop("db", None)
-
-    if db is not None:
-        db.close()
 
 
 def init_db():
@@ -56,4 +27,3 @@ def init_db_command():
 
 def init_app(app):
     app.cli.add_command(init_db_command)
-    get_db().create_all()

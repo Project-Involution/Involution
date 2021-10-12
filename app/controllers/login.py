@@ -1,8 +1,8 @@
 from flask_login import LoginManager, login_user, logout_user, current_user
 from flask import current_app, redirect, url_for, flash, session
+import app
 from app.models.user import User
 from app.models.login import LoginForm, RegisterForm
-from app.controllers.db import get_db
 from flask import render_template, Blueprint
 from os import path
 
@@ -10,7 +10,7 @@ bp = Blueprint("login", __name__, url_prefix="/signin")
 
 login_manager = LoginManager()
 login_manager.init_app(current_app)
-db = get_db()
+db = app.db
 
 
 @login_manager.user_loader
