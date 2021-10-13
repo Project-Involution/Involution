@@ -1,6 +1,7 @@
 import {
   Button,
   FormControl,
+  FormLabel,
   GridItem,
   Heading,
   Input,
@@ -11,16 +12,10 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 
-const Intro = () => {
-  const colSpan = useBreakpointValue({ base: 4, md: 3 });
+const IntroText = () => {
+  const colSpan = useBreakpointValue({ base: 5, md: 3 });
   return (
-    <VStack
-      w="full"
-      h="full"
-      p={10}
-      spacing={10}
-      align={{ base: "center", lg: "flex-start" }}
-    >
+    <VStack w="full" h="full" spacing={10} px={20} mt={10} align="center">
       <VStack spacing={3} align="flex-start">
         <Heading w="full" size="lg">
           No matter what you want to learn,
@@ -38,21 +33,20 @@ const Intro = () => {
         <SimpleGrid
           w="full"
           maxW={{ base: "full", lg: "md" }}
-          columns={4}
+          columns={5}
           columnGap={3}
           rowGap={3}
         >
           <GridItem colSpan={colSpan}>
-            <FormControl>
+            <FormControl id="email">
+              <FormLabel fontSize="xs">Enter Your Email Address Here</FormLabel>
               <Input size="sm" placeholder="Email Address"></Input>
             </FormControl>
           </GridItem>
-          <GridItem>
-            <FormControl>
-              <Button size="sm" colorScheme="purple">
-                Sign Up For Involution
-              </Button>
-            </FormControl>
+          <GridItem colSpan={2} alignSelf="flex-end">
+            <Button size="sm" colorScheme="purple">
+              Sign Up For Involution
+            </Button>
           </GridItem>
         </SimpleGrid>
       </VStack>
@@ -60,4 +54,4 @@ const Intro = () => {
   );
 };
 
-export default Intro;
+export default IntroText;

@@ -2,13 +2,7 @@ import { Image, VStack } from "@chakra-ui/react";
 
 const IntroImage = () => {
   return (
-    <VStack
-      w="full"
-      h="full"
-      p={10}
-      spacing={10}
-      align={{ base: "center", lg: "flex-end" }}
-    >
+    <VStack w="full" h="full" spacing={10} px={20} mt={10} align="center">
       <Image
         w="full"
         maxW={{ base: "full", md: "2xl", lg: "md" }}
