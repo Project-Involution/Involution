@@ -40,7 +40,7 @@ const IntroText: React.FC = () => {
           <GridItem colSpan={colSpan}>
             <FormControl id="email">
               <FormLabel fontSize="xs">Enter Your Email Address Here</FormLabel>
-              <Input size="sm" placeholder="Email Address"></Input>
+              <Input size="sm" placeholder="Email Address" type="email"></Input>
             </FormControl>
           </GridItem>
           <GridItem colSpan={2} alignSelf="flex-end">

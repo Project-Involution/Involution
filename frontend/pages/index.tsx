@@ -11,9 +11,10 @@ const IndexPage: NextPage = () => {
       <NavBar />
 
       <Flex
-        h={{ base: "auto", lg: "full" }}
-        py={20}
+        h="full"
+        pt={20}
         direction={{ base: "column-reverse", lg: "row" }}
+        justify="center"
         align="center"
       >
         <IntroText />

@@ -1,6 +1,9 @@
 import { Box, Button, Flex, HStack, Heading } from "@chakra-ui/react";
 
+import { useRouter } from "next/router";
+
 const NavBar: React.FC = () => {
+  const router = useRouter();
   return (
     <Flex
       w="full"
@@ -18,7 +21,9 @@ const NavBar: React.FC = () => {
       </Box>
       <HStack spacing={3}>
         <Button>Log In</Button>
-        <Button colorScheme="purple">Sign Up</Button>
+        <Button colorScheme="purple" onClick={() => router.push("/signup")}>
+          Sign Up
+        </Button>
       </HStack>
     </Flex>
   );
