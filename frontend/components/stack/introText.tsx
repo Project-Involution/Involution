@@ -12,7 +12,7 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 
-const IntroText = () => {
+const IntroText: React.FC = () => {
   const colSpan = useBreakpointValue({ base: 5, md: 3 });
   return (
     <VStack w="full" h="full" spacing={10} px={20} mt={10} align="center">

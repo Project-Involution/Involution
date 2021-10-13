@@ -1,6 +1,6 @@
-import { Box, Button, Flex, HStack, Heading, Spacer } from "@chakra-ui/react";
+import { Box, Button, Flex, HStack, Heading } from "@chakra-ui/react";
 
-const NavBar = () => {
+const NavBar: React.FC = () => {
   return (
     <Flex
       w="full"

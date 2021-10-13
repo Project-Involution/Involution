@@ -1,6 +1,6 @@
 import { Image, VStack } from "@chakra-ui/react";
 
-const IntroImage = () => {
+const IntroImage: React.FC = () => {
   return (
     <VStack w="full" h="full" spacing={10} px={20} mt={10} align="center">
       <Image
