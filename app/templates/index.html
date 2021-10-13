@@ -8,6 +8,14 @@
 <body>
 
     <h1 class="center" style="font-size: 5em;">Welcome to Involution</h1>
+    {% if username == None %}
+        <a href="{{ url_for(login) }}">
+            <button>Login</button>
+        </a>
+    {% else %}
+        Hi, {{ username }}!
+        <a href="{{ url_for(logout) }}">Logout</a>
+    {% endif %}
 
 </body>
 </html>

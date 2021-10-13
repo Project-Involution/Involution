@@ -1,25 +1,15 @@
 import click
-from flask import current_app, g
+import os
+from flask import current_app
 from flask.cli import with_appcontext
-from flask_sqlalchemy import SQLAlchemy
-
-
-def get_db():
-    if "db" not in g:
-        g.db = SQLAlchemy(current_app)
-    return g.db
-
-
-def close_db(e=None):
-    db = g.pop("db", None)
-
-    if db is not None:
-        db.close()
+from pathlib import Path
 
 
 def init_db():
-    db = get_db()
-    db.drop_all()
+
+    db_location = os.path.join(current_app.instance_path, "app.db")
+    db = Path(db_location)
+    db.unlink(missing_ok=True)
 
 
 @click.command("init-db")
@@ -36,5 +26,4 @@ def init_db_command():
 
 
 def init_app(app):
-    app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
