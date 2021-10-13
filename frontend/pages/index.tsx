@@ -1,8 +1,25 @@
-import { Flex } from "@chakra-ui/react";
+import { Container, Flex } from "@chakra-ui/react";
+
+import IntroImage from "../components/sections/introImage";
+import IntroText from "../components/sections/introText";
+import NavBar from "../components/nav/navBar";
 import type { NextPage } from "next";
 
 const IndexPage: NextPage = () => {
-  return <Flex>Hello world.</Flex>;
+  return (
+    <Container maxW="container.2xl" p={0}>
+      <NavBar />
+
+      <Flex
+        h={{ base: "auto", lg: "100vh" }}
+        py={20}
+        direction={{ base: "column-reverse", lg: "row" }}
+      >
+        <IntroText />
+        <IntroImage />
+      </Flex>
+    </Container>
+  );
 };
 
 export default IndexPage;
