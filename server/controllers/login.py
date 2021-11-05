@@ -1,16 +1,16 @@
 from flask_login import LoginManager, login_user, logout_user, current_user
-from flask import current_app, redirect, url_for, flash, session
-import app
-from app.models.user import User
-from app.models.login import LoginForm, RegisterForm
+from flask import current_app, redirect, url_for, flash, session, request, jsonify, Response
+from flask_cors import CORS, cross_origin
+import server
+from server.models.user import User
 from flask import render_template, Blueprint
 from os import path
 
-bp = Blueprint("login", __name__, url_prefix="/signin")
+bp = Blueprint("login", __name__)
 
 login_manager = LoginManager()
 login_manager.init_app(current_app)
-db = app.db
+db = server.db
 
 
 @login_manager.user_loader
@@ -18,22 +18,33 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 
-@bp.route("/login", methods=['GET', 'POST'])
+@bp.route("/login", methods=['POST'])
 def login():
-    form = LoginForm()
-    username = form.username.data
-    password = form.password.data
-    if form.validate_on_submit() and not current_user.get_id():
+
+    username = request.json["username"]
+    email = request.json["email"]
+    password = None
+
+    resp = jsonify({
+        "username": username,
+        "email": email,
+    })
+    
+    if not current_user.get_id():
         user = User.query.filter_by(username=username).first()
 
         if user and user.verify_password(password):
             login_user(user)
-            flash("Successfully logged in!")
+            msg = f"{username} has successfully logged in!"
 
         else:
-            flash("Unknown user or incorrect password.", "error")
+            msg = "Unknown user or incorrect password."
 
-        return redirect(url_for("index.index"))
+        resp = jsonify({
+        "msg": msg,
+        })
+
+        return resp
 
     session.pop('_flashes', None)
     if current_user.get_id():
@@ -49,25 +60,3 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for("index.index"))
-
-
-@bp.route("/register", methods=['GET', 'POST'])
-def register():
-    form = RegisterForm()
-    username = form.username.data
-    password = form.password.data
-    email = form.email.data
-
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=username).first()
-        if not user:
-            user = User(username, password, email)
-            db.session.add(user)
-            db.session.commit()
-        return redirect(url_for('login.login'))
-
-    kwargs = {
-        "form": form,
-    }
-    template = path.join("register.html")
-    return render_template(template, **kwargs)
