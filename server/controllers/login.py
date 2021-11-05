@@ -1,10 +1,10 @@
 from flask_login import LoginManager, login_user, logout_user, current_user
-from flask import current_app, redirect, url_for, flash, session, request, jsonify, Response
-from flask_cors import CORS, cross_origin
+from flask import current_app, redirect, url_for, request, jsonify, g, session
+from flask_login.mixins import AnonymousUserMixin
 import server
+from flask_cors import cross_origin
 from server.models.user import User
-from flask import render_template, Blueprint
-from os import path
+from flask import Blueprint
 
 bp = Blueprint("login", __name__)
 
@@ -15,45 +15,42 @@ db = server.db
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(user_id)
+    return User.query.filter_by(id=user_id).first()
 
 
 @bp.route("/login", methods=['POST'])
 def login():
 
     username = request.json["username"]
-    email = request.json["email"]
-    password = None
+    password = request.json["password"]
 
-    resp = jsonify({
-        "username": username,
-        "email": email,
-    })
-    
-    if not current_user.get_id():
+    msg = None
+
+    print(id(session), session)
+    print(current_user)
+
+    if not current_user.is_authenticated:
+        
         user = User.query.filter_by(username=username).first()
 
         if user and user.verify_password(password):
             login_user(user)
+            g.current_user = user
             msg = f"{username} has successfully logged in!"
 
         else:
             msg = "Unknown user or incorrect password."
 
-        resp = jsonify({
-        "msg": msg,
-        })
+    else:
+        msg = f"{current_user.username} has already logged in!"
 
-        return resp
+    # print(current_user.id)
 
-    session.pop('_flashes', None)
-    if current_user.get_id():
-        flash("Already logged in!")
-    kwargs = {
-        "form": form,
-    }
-    template = path.join("login.html")
-    return render_template(template, **kwargs)
+    resp = jsonify({
+    "msg": msg,
+    })
+
+    return resp
 
 
 @bp.route("/logout", methods=['GET', 'POST'])

@@ -20,7 +20,9 @@ const NavBar: React.FC = () => {
         </Heading>
       </Box>
       <HStack spacing={3}>
-        <Button>Log In</Button>
+        <Button colorScheme="pink" onClick={() => router.push("/login")}>
+          Log In
+        </Button>
         <Button colorScheme="purple" onClick={() => router.push("/signup")}>
           Sign Up
         </Button>
