@@ -9,9 +9,9 @@ from flask_cors import CORS
 db = SQLAlchemy()
 migrate = Migrate()
 
-
 def create_app():
     app = Flask(__name__)
+    app.instance_path = "./instance"
     CORS(app, supports_credentials=True)
 
     app.config.from_mapping(

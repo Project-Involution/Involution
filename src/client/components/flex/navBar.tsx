@@ -4,6 +4,9 @@ import { useRouter } from "next/router";
 
 const NavBar: React.FC = () => {
   const router = useRouter();
+
+  
+
   return (
     <Flex
       w="full"
@@ -19,7 +22,10 @@ const NavBar: React.FC = () => {
           <a href="/">Involution</a>
         </Heading>
       </Box>
+
       <HStack spacing={3}>
+        
+
         <Button colorScheme="pink" onClick={() => router.push("/login")}>
           Log In
         </Button>
