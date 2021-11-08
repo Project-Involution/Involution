@@ -1,8 +1,6 @@
 from flask_login import LoginManager, login_user, logout_user, current_user
 from flask import current_app, redirect, url_for, request, jsonify, g, session
-from flask_login.mixins import AnonymousUserMixin
 import server
-from flask_cors import cross_origin
 from server.models.user import User
 from flask import Blueprint
 
@@ -43,8 +41,6 @@ def login():
 
     else:
         msg = f"{current_user.username} has already logged in!"
-
-    # print(current_user.id)
 
     resp = jsonify({
     "msg": msg,
