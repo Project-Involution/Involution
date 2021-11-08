@@ -13,3 +13,7 @@ services:
       - "3000:3000"
     volumes:
       - ./src/client:/client
+      - node_modules:/client/node_modules
+
+volumes:
+  node_modules:
