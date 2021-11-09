@@ -6,6 +6,7 @@ services:
       - "5000:5000"
     volumes:
       - ./src/server:/server
+      - instance:/server/instance
 
   client:
     build: ./src/client
@@ -17,3 +18,4 @@ services:
 
 volumes:
   node_modules:
+  instance:
