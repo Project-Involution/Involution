@@ -3,14 +3,16 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from app.controllers.db import init_app
+from server.controllers.db import init_app
+from flask_cors import CORS
 
 db = SQLAlchemy()
 migrate = Migrate()
 
-
 def create_app():
     app = Flask(__name__)
+    app.instance_path = "./instance"
+    CORS(app, supports_credentials=True)
 
     app.config.from_mapping(
         SECRET_KEY="dev",
@@ -26,22 +28,15 @@ def create_app():
     except OSError:
         pass
 
-    # push the app context
+    db.init_app(app)
+    migrate.init_app(app, db)
+
+    # blueprints start here
     with app.app_context():
-
-        db.init_app(app)
-        migrate.init_app(app, db)
-
-        # blueprints start here
-        from .controllers import index, login
-
-        app.register_blueprint(index.bp)
+        
+        from .controllers import test, login, signup
+        app.register_blueprint(test.bp)
         app.register_blueprint(login.bp)
+        app.register_blueprint(signup.bp)
 
     return app
-
-
-# For debugging usage.
-# app = create_app()
-# app.run(debug=True, use_debugger=False, use_reloader=False)
-# Place a breakpoint in front of the above line if debugger is needed.
